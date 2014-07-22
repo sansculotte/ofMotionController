@@ -2,7 +2,7 @@
 
 
 //--------------------------------------------------------------
-void testApp::setup(){	 
+void testApp::setup() {
 	
 	// basic values
 	ofSeedRandom();
@@ -16,7 +16,7 @@ void testApp::setup(){
 	gridHeight = 5;
 	//gridThreshold = 10;
 	
-	fader		= 1.618033;	// fade with PHI
+	fader	= 1.618033;	// fade with PHI
 
 	xlen = (int) screenWidth / gridWidth;
 	ylen = (int) screenHeight / gridHeight;
@@ -32,12 +32,12 @@ void testApp::setup(){
 	vidTexture.allocate(width,height, GL_RGB);
 
    oscSender.setup(OSC_ADDRESS, OSC_PORT);
-	
+
 }
 
 
 //--------------------------------------------------------------
-void testApp::update(){
+void testApp::update() {
 
 	int channels = 3;
 	int totalBytes = width * height * channels;
@@ -67,7 +67,6 @@ void testApp::update(){
 		
 	
 		// get the difference between this frame and the last frame
-
 		for (int i = 0; i < width*height; i++){
 			dataGrayDiff[i] = abs( dataGrayCurrent[i] - dataGrayPast[i] );
 		}
@@ -132,18 +131,18 @@ void testApp::draw(){
 			ofSetColor(0, 0, gridData[i] / 2);
 			ofRect( xpos, ypos, xlen, ylen);
 		}
-		sendOsc(i, gridData[i]); 
+		sendOsc(i, gridData[i]);
 	}
 
-//	ofSetColor(0xffffff);
-	//vidGrabber.draw(20,20);
+//	ofSetHexColor(0xffffff);
+//	vidGrabber.draw(0,0);
 }
 
 
 //--------------------------------------------------------------
-void testApp::keyPressed  (int key){ 
+void testApp::keyPressed  (int key){
 	
-	// in fullscreen mode, on a pc at least, the 
+	// in fullscreen mode, on a pc at least, the
 	// first time video settings the come up
 	// they come up *under* the fullscreen window
 	// use alt-tab to navigate to the settings

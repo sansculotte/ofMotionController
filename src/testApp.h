@@ -6,9 +6,9 @@
 #include "ofxOsc.h"
 
 #define OSC_ADDRESS "127.0.0.1"
-#define OSC_PORT 2323
+#define OSC_PORT 2323 // supercollider: 57120
 
-class testApp : public ofSimpleApp{
+class testApp : public ofSimpleApp {
 	
 	public:
 		
