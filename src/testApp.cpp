@@ -46,13 +46,12 @@ void testApp::update(){
 	// set background black
 	ofBackground(0,0,0);
 	
-//deprectaed.	vidGrabber.grabFrame();
-   vidGrabber.update();
+    vidGrabber.update();
 	
 	// motion dedection action
 	if(vidGrabber.isFrameNew() == true) {
 	
-		unsigned char * pixels = vidGrabber.getPixels();
+		ofPixels pixels = vidGrabber.getPixels();
 
 		// convert to gray with supersimple-average-all-channels geayscale converter
 		for (int i = 0; i < totalBytes; i += channels){
@@ -69,7 +68,7 @@ void testApp::update(){
 		// get the difference between this frame and the last frame
 
 		for (int i = 0; i < width*height; i++){
-			dataGrayDiff[i] = abs( dataGrayCurrent[i] - dataGrayPast[i] );
+			dataGrayDiff[i] = abs(dataGrayCurrent[i] - dataGrayPast[i]);
 		}
 
 		//fade grid

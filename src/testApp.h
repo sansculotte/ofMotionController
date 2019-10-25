@@ -8,7 +8,7 @@
 #define OSC_ADDRESS "127.0.0.1"
 #define OSC_PORT 2323
 
-class testApp : public ofSimpleApp{
+class testApp : public ofBaseApp{
 	
 	public:
 		
