@@ -2,42 +2,44 @@
 
 
 //--------------------------------------------------------------
-void ofApp::setup(){	
+void ofApp::setup() {
 
     // basic values
     ofSeedRandom();
-    width = 320;
-    height = 200;
+    width = 640;
+    height = 480;
 
-    screenWidth  = 320;
-    screenHeight = 200;
+    screenWidth  = 640;
+    screenHeight = 480;
 
     gridWidth  = 5;
     gridHeight = 5;
-    //gridThreshold = 10;
+    // gridThreshold = 10;
 
-    fader		= 1.618033;	// fade with PHI
+    fader    = 1.618033; // fade with PHI
+    mousePct = 0.5;
 
     xlen = (int) screenWidth / gridWidth;
     ylen = (int) screenHeight / gridHeight;
 
-    // komplexere datenstrukturen, groessen initialisieren
-    dataGrayCurrent 	= new unsigned char[width*height]; // grarray
-    dataGrayPast		= new unsigned char[width*height]; // grarray
-    dataGrayDiff		= new unsigned char[width*height]; // grarray
-    dataGrayThreshold	= new unsigned char[width*height]; // grarray
+    // pixelbuffers
+    dataGrayCurrent   = new unsigned char[width*height];
+    dataGrayPast      = new unsigned char[width*height];
+    dataGrayDiff      = new unsigned char[width*height];
+    dataGrayThreshold = new unsigned char[width*height];
 
+    vidGrabber.setDeviceID(0);
+    vidGrabber.setDesiredFrameRate(60);
     vidGrabber.setVerbose(true);
     vidGrabber.initGrabber(width, height);
     vidTexture.allocate(width, height, GL_RGB);
 
     oscSender.setup(OSC_ADDRESS, OSC_PORT);
-
 }
 
 
 //--------------------------------------------------------------
-void ofApp::update(){
+void ofApp::update() {
 
     int channels = 3;
     int totalBytes = width * height * channels;
@@ -111,19 +113,19 @@ void ofApp::update(){
 }
 
 //--------------------------------------------------------------
-void ofApp::draw(){
+void ofApp::draw() {
     ofSetupScreen();
 
     int row = 0;
     int xpos = 0;
     int ypos = screenHeight;
 
-    //	vidTexture.draw(360,20,width,height);
+    // vidTexture.draw(360,20,width,height);
 
 
     for (int i = 0; i < gridHeight * gridWidth; i++ ) {
         if (i % gridWidth == 0) row++;
-        //		cout << (xlen * ylen * (movementThreshold / 100.0f)) << " " << endl;
+        // cout << (xlen * ylen * (movementThreshold / 100.0f)) << " " << endl;
         if (gridData[i] > 0 ) {
             //cout << i << " - " << gridData[i] << " " << endl;
             xpos = (int) (i % gridWidth) * xlen;
@@ -134,21 +136,15 @@ void ofApp::draw(){
         sendOsc(i, gridData[i]);
     }
 
-    //	ofSetColor(0xffffff);
+    // ofSetColor(0xffffff);
     //vidGrabber.draw(20,20);
 }
 
 
 //--------------------------------------------------------------
-void ofApp::keyPressed  (int key){
+void ofApp::keyPressed (int key) {
 
-    // in fullscreen mode, on a pc at least, the
-    // first time video settings the come up
-    // they come up *under* the fullscreen window
-    // use alt-tab to navigate to the settings
-    // window. we are working on a fix for this...
-
-    if (key == 's' || key == 'S'){
+    if (key == 's' || key == 'S') {
         vidGrabber.videoSettings();
     }
     if (key == 't') {
@@ -156,11 +152,14 @@ void ofApp::keyPressed  (int key){
         // OSC stuff
         sendOsc(1, 3);
     }
-    if (key == '+' && threshold <= 100){
+    if (key == '+' && threshold <= 100) {
         thresholdKey += 1;
     }
-    if (key == '-' && threshold > 0){
+    if (key == '-' && threshold > 0) {
         thresholdKey -= 1;
+    }
+    if (key == 'q') {
+        ofExit();
     }
 
 }
@@ -191,14 +190,14 @@ void ofApp::sendOsc (int slot, int value) {
 
     // osc stuff
     ofxOscMessage msg;
-    //		UdpTransmitSocket transmitSocket( IpEndpointName( ADDRESS, PORT ) );
+    // UdpTransmitSocket transmitSocket( IpEndpointName( ADDRESS, PORT ) );
 
     msg.setAddress("/ctrl");
     msg.addIntArg(slot);
     msg.addIntArg(value);
     oscSender.sendMessage(msg);
-    //		p << osc::BeginBundleImmediate
-    //			p << osc::BeginMessage( name ) << value << osc::EndMessage;
-    //		<< osc::EndBundle;
-    //		transmitSocket.Send( p.Data(), p.Size() );
+    // p << osc::BeginBundleImmediate
+    // p << osc::BeginMessage( name ) << value << osc::EndMessage;
+    // << osc::EndBundle;
+    // transmitSocket.Send( p.Data(), p.Size() );
 }
