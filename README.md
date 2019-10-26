@@ -12,13 +12,16 @@ the details.
 It's easy to hook it up to supercollider[2], but you have to change the OSC port
 to 57120.
 
-build
+Build
 -----
+
+You need openframework installed and the ofxOSC addon installed.
 
 - clone into OFHOME/apps/myApps/
 - make
+- make run
 
-configuration
+Configuration
 -------------
 
 There is a realtime sensitivity setting interface using the 
@@ -33,7 +36,7 @@ screen size, grid size and fade factor can be tweaked in src/testApp.cpp
 
 brought to you by sansculotte [3]
 
-references
+References
 ----------
 
    [1]: http://openframeworks.cc
