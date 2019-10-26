@@ -1,8 +1,8 @@
-#include "testApp.h"
+#include "ofApp.h"
 
 
 //--------------------------------------------------------------
-void testApp::setup(){	
+void ofApp::setup(){	
 
     // basic values
     ofSeedRandom();
@@ -37,7 +37,7 @@ void testApp::setup(){
 
 
 //--------------------------------------------------------------
-void testApp::update(){
+void ofApp::update(){
 
     int channels = 3;
     int totalBytes = width * height * channels;
@@ -111,7 +111,7 @@ void testApp::update(){
 }
 
 //--------------------------------------------------------------
-void testApp::draw(){
+void ofApp::draw(){
     ofSetupScreen();
 
     int row = 0;
@@ -140,7 +140,7 @@ void testApp::draw(){
 
 
 //--------------------------------------------------------------
-void testApp::keyPressed  (int key){
+void ofApp::keyPressed  (int key){
 
     // in fullscreen mode, on a pc at least, the
     // first time video settings the come up
@@ -166,28 +166,28 @@ void testApp::keyPressed  (int key){
 }
 
 //--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y ){
+void ofApp::mouseMoved(int x, int y ){
     mousePct = (float) x / (float) screenWidth;
     //cout << mousePct << endl;
 }
 
 //--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button){
+void ofApp::mouseDragged(int x, int y, int button){
 
 }
 
 //--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button){
+void ofApp::mousePressed(int x, int y, int button){
 
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(){
+void ofApp::mouseReleased(){
 
 }
 
 //-------------------------------------------------------------------------------------------------------
-void testApp::sendOsc (int slot, int value) {
+void ofApp::sendOsc (int slot, int value) {
 
     // osc stuff
     ofxOscMessage msg;
